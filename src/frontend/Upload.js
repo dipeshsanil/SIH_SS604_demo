@@ -8,15 +8,15 @@ import { create } from 'ipfs-http-client'
 const client = create('https://ipfs.infura.io:5001/api/v0')
 
 
-const UploadNFT = ({marketplace, nft}) =>{
+const Upload = ({upload}) =>{
   
   const navigate = useNavigate();
+  console.log(upload)
   const [image, setImage] = useState('')
-  const [price, setPrice] = useState(null)
   const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const [details, setDetails] = useState('')
 
-  const upload = async (event) => {
+  const send = async (event) => {
     event.preventDefault()
     const file = event.target.files[0]
     console.log(file)
@@ -32,27 +32,32 @@ const UploadNFT = ({marketplace, nft}) =>{
   }
   const create = async (event) => {
     event.preventDefault()
-    if (!image || !price || !title || !description) return
+    if (!image || !title || !details) return
     try{
-      const result = await client.add(JSON.stringify({image, price, title, description}))
+      const result = await client.add(JSON.stringify({image, title, details}))
       console.log(result)
-      await mint(result)
+      await uploaddetails(result)
     } catch(error) {
       console.log("ipfs uri upload error: ", error)
     }
   }
    
 
-  const mint = async (result) => {
-    const uri = `https://ipfs.infura.io/ipfs/${result.path}`
-    await(await nft.mint(uri)).wait()
+  // const mint = async (result) => {
+  //   const uri = `https://ipfs.infura.io/ipfs/${result.path}`
+  //   await(await nft.mint(uri)).wait()
     
-    const id = await nft.tokenCount()
+  //   const id = await nft.tokenCount()
  
-    await(await nft.setApprovalForAll(marketplace.address, true)).wait()
+  //   await(await nft.setApprovalForAll(marketplace.address, true)).wait()
 
-    const listingPrice = ethers.utils.parseEther(price.toString())
-    await(await marketplace.makeItem(nft.address, id, listingPrice)).wait()
+  //   const listingPrice = ethers.utils.parseEther(price.toString())
+  //   await(await marketplace.makeItem(nft.address, id, listingPrice)).wait()
+  // }
+  const uploaddetails = async (result) => {
+      const uri = `https://ipfs.infura.io/ipfs/${result.path}`
+      await(await upload.uploadImage(uri)).wait();
+      console.log(await upload.tokenId())
   }
 
   const onClick = async(event) => {
@@ -71,7 +76,7 @@ const UploadNFT = ({marketplace, nft}) =>{
          <form>
          <div className="mb-3">
         <label for="title" className="form-label">Upload</label>
-        <input onChange={upload} required type="file" className="form-control" name="file" id="title" />
+        <input onChange={send} required type="file" className="form-control" name="file" id="title" />
         
     </div>
     <div className="mb-3">
@@ -81,8 +86,8 @@ const UploadNFT = ({marketplace, nft}) =>{
     </div>
     
     <div className="mb-3">
-        <label for="exampleInputPassword1" className="form-label">Description</label>
-        <textarea onChange={(e) => setDescription(e.target.value)} type="text" className="form-control" rows="6"/>
+        <label for="exampleInputPassword1" className="form-label">Details</label>
+        <textarea onChange={(e) => setDetails(e.target.value)} type="text" className="form-control" rows="6"/>
     </div>
     {/* <div className="mb-3">
         <label for="title" className="form-label">Price</label>
@@ -96,4 +101,4 @@ const UploadNFT = ({marketplace, nft}) =>{
   );
 }
 
-export default UploadNFT;
+export default Upload;

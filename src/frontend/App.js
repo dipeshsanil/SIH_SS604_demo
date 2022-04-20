@@ -1,24 +1,22 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import NFTAddress from "./contractsData/NFT-address.json";
-import NFTAbi from "./contractsData/NFT.json";
-import MarketplaceAddress from "./contractsData/Marketplace-address.json";
-import MarketplaceAbi from "./contractsData/Marketplace.json";
+import UploadAddress from "./contractsData/Upload-address.json";
+import UploadAbi from "./contractsData/Upload.json";
 import NavBar from "./NavBar";
 import Home from "./Home";
 import Login from "./Login/Login";
 import Details from "./Details";
 import UserDashboard from "./UserDashboard";
 import AdminDashboard from "./AdminDashboard";
-import UploadNFT from "./UploadNFT";
+import Upload from "./Upload";
 import { useState } from "react";
 import { ethers } from "ethers";
+// import { upload } from "@testing-library/user-event/dist/upload";
 
 const App = () => {
   const [account, setAccount] = useState(null);
-  const [nft, setNFT] = useState({});
+  const [upload, setUpload] = useState({});
   const [balance, setBalance] = useState();
-  const [marketplace, setMarketplace] = useState({});
   const [loading, setLoading] = useState(true);
 
   const web3Handler = async () => {
@@ -41,17 +39,12 @@ const App = () => {
   };
 
   const loadContracts = async (signer) => {
-    const marketplace = new ethers.Contract(
-      MarketplaceAddress.address,
-      MarketplaceAbi.abi,
+    const upload = new ethers.Contract(
+      UploadAddress.address,
+      UploadAbi.abi,
       signer
     );
-    setMarketplace(marketplace);
-    const nft = new ethers.Contract(
-      NFTAddress.address, 
-      NFTAbi.abi, 
-      signer);
-    setNFT(nft);
+    setUpload(upload);
     setLoading(false);
 
   
@@ -72,12 +65,12 @@ const App = () => {
             }
           >
             <Route index element={<Login web3Handler={web3Handler} />} />
-            <Route path="home" element={<Home nft={nft} marketplace={marketplace}/>} />
+            <Route path="home" element={<Home upload = {upload}/>} />
             <Route path="*" element={<Navigate to="/" />} />
-            <Route path="details" element={<Details marketplace={marketplace}/>} />
+            <Route path="details" element={<Details upload = {upload}/>} />
             <Route path="user" element={<UserDashboard />} />
             <Route path="admin" element={<AdminDashboard />} />
-            <Route path="upload" element={<UploadNFT nft={nft} marketplace={marketplace}/>} />
+            <Route path="upload" element={<Upload upload={upload}/>} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,8 +1,12 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import { fromUrl, fromUrls, fromArrayBuffer, fromBlob } from "geotiff";
+import Tiff from "tiff.js";
+import { useEffect } from "react";
 // import { ethers } from "ethers";
-const Card = ({ item, buy }) => {
-	const loadImage = (ipfsUrl, index) => {
+const Card = ({ key, item }) => {
+	
+	const loadImage = (ipfsUrl, key) => {
 		// let url = URL.createObjectURL(event.target.files[0]);
 		var xhr = new XMLHttpRequest();
 		xhr.responseType = "arraybuffer";
@@ -15,17 +19,17 @@ const Card = ({ item, buy }) => {
 				TOTAL_MEMORY: 16777216 * 10,
 			});
 			var tiff = new Tiff({ buffer: arrayBuffer });
-			let canvas = tiff.toCanvas({ quality: "thumbnail" });
-			// var dataURI = tiff.toDataURL();
-			// document.getElementById("img").src = dataURI;
-			document.getElementById(index).appendChild(canvas);
+			// let canvas = tiff.toCanvas({ quality: "thumbnail" });
+			var dataURI = tiff.toDataURL();
+			document.getElementById(key).src = dataURI;
+			// document.getElementById(key).appendChild(canvas);
 		};
 		xhr.send();
 	};
 
-	const onImageChange = async (ipfsUrl, index) => {
+	const onImageChange = async (ipfsUrl, key) => {
 		// let url = URL.createObjectURL(event.target.files[0]);
-		loadImage(ipfsUrl, index);
+		loadImage(ipfsUrl, key);
 		const response = await fetch(ipfsUrl);
 		const arrayBuffer = await response.arrayBuffer();
 		const tiff = await fromArrayBuffer(arrayBuffer);
@@ -55,8 +59,8 @@ const Card = ({ item, buy }) => {
 	return (
 		<div class="col-12 col-md-3 gy-4">
 			<div class="card shadow-sm" style={{ borderRadius: 20 }}>
-				<div id={index} className="card-image">
-					{/* <img
+				<div id={key}  className="card-image">
+					<img
 						style={{
 							// borderTopLeftRadius: 20,
 							// borderTopRightRadius: 20,
@@ -64,11 +68,12 @@ const Card = ({ item, buy }) => {
 							minHeight: "200px",
 						}}
 						// src= {item.image}
-						src="https://picsum.photos/200"
+						// id = {key}
+						src={item.image}
 						className="card-img-top"
 						alt="..."
-					/> */}
-					{onImageChange(item.image, index)}
+					/>
+					{/* {onImageChange(item.image, key)} */}
 					<div className="image-overlay"></div>
 				</div>
 				<div class="card-body ">
@@ -92,14 +97,14 @@ const Card = ({ item, buy }) => {
 							</svg>
 						</a>
 					</div>
-					<p class="card-text text-muted">{item.seller}</p>
+					 {/* <p class="card-text text-muted">{item.seller}</p> */}
 					<Link
 						to="/details"
-						state={{ item, buy }}
+						state={{ item}}
 						style={{ textDecoration: "none" }}>
-						{/* <button class="btn btn-primary btn-rounded" href="#">
-							{ethers.utils.formatEther(item.totalPrice)} ETH
-						</button> */}
+						<button class="btn btn-primary btn-rounded" href="#">
+							View Details
+						</button>
 					</Link>
 				</div>
 			</div>
