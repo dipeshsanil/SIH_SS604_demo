@@ -98,14 +98,15 @@ const Card = ({ key, item }) => {
 						</a>
 					</div>
 					 {/* <p class="card-text text-muted">{item.seller}</p> */}
-					<Link
+					{/* <Link
 						to="/details"
 						state={{ item}}
 						style={{ textDecoration: "none" }}>
-						<button class="btn btn-primary btn-rounded" href="#">
-							View Details
+	
+					</Link> */}
+					<button class="btn btn-primary btn-rounded" >
+						<a href={item.image}>Download</a>
 						</button>
-					</Link>
 				</div>
 			</div>
 		</div>
