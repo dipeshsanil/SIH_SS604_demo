@@ -5,7 +5,6 @@ import Tiff from "tiff.js";
 import { useEffect } from "react";
 // import { ethers } from "ethers";
 const Card = ({ key, item }) => {
-	
 	const loadImage = (ipfsUrl, key) => {
 		// let url = URL.createObjectURL(event.target.files[0]);
 		var xhr = new XMLHttpRequest();
@@ -59,7 +58,7 @@ const Card = ({ key, item }) => {
 	return (
 		<div class="col-12 col-md-3 gy-4">
 			<div class="card shadow-sm" style={{ borderRadius: 20 }}>
-				<div id={key}  className="card-image">
+				<div id={key} className="card-image">
 					<img
 						style={{
 							// borderTopLeftRadius: 20,
@@ -97,16 +96,16 @@ const Card = ({ key, item }) => {
 							</svg>
 						</a>
 					</div>
-					 {/* <p class="card-text text-muted">{item.seller}</p> */}
-					{/* <Link
-						to="/details"
-						state={{ item}}
+					{/* <p class="card-text text-muted">{item.seller}</p> */}
+					<Link
+						to="/preview"
+						state={{ item }}
 						style={{ textDecoration: "none" }}>
-	
-					</Link> */}
-					<button class="btn btn-primary btn-rounded" >
+						<button class="btn btn-primary btn-rounded">Preview File</button>
+					</Link>
+					<button class="btn btn-primary btn-rounded">
 						<a href={item.image}>Download</a>
-						</button>
+					</button>
 				</div>
 			</div>
 		</div>
