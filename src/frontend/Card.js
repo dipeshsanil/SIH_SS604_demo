@@ -59,7 +59,7 @@ const Card = ({ key, item }) => {
 		<div class="col-12 col-md-3 gy-4">
 			<div class="card shadow-sm" style={{ borderRadius: 20 }}>
 				<div id={key} className="card-image">
-					<img
+					{/* <img
 						style={{
 							// borderTopLeftRadius: 20,
 							// borderTopRightRadius: 20,
@@ -71,7 +71,7 @@ const Card = ({ key, item }) => {
 						src={item.image}
 						className="card-img-top"
 						alt="..."
-					/>
+					/> */}
 					{/* {onImageChange(item.image, key)} */}
 					<div className="image-overlay"></div>
 				</div>
@@ -95,14 +95,18 @@ const Card = ({ key, item }) => {
 								<circle cx="51.5" cy="5.5" r="5.5" fill="black" />
 							</svg>
 						</a>
-					</div>
-					{/* <p class="card-text text-muted">{item.seller}</p> */}
-					<Link
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<li>
+						<Link
 						to="/preview"
 						state={{ item }}
 						style={{ textDecoration: "none" }}>
-						<button class="btn btn-primary btn-rounded">Preview File</button>
-					</Link>
+						<button class="dropdown-item">Preview</button>
+						</Link></li>
+						</ul>
+					</div>
+					{/* <p class="card-text text-muted">{item.seller}</p> */}
+
 					<button class="btn btn-primary btn-rounded">
 						<a href={item.image}>Download</a>
 					</button>

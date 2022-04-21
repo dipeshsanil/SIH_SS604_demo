@@ -8,10 +8,10 @@ const HeroSection = ()=>{
                 <div className='row'>
                     <div className='col-12 py-4 text-center'>
                         <h1>EXPLORE OUR <br/>DIGITAL STORAGE SOLUTION</h1>
-                        <p style={{color:"white"}} className="py-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer interdum neque id lectus congue rutrum.</p>
-                        {/* <div id='explore'>
+                        <p style={{color:"white"}} className="py-2">TEAM APEX</p>
+                        <div id='explore'>
                             <a href="#marketplace"><Button name="Explore"/></a>
-                        </div> */}
+                        </div>
                         <div>
                             <a href="#marketplace"><img src={scrollDownGif} alt="scroll Down" style={{width:"120px"}}/></a>
                         </div>

@@ -11,21 +11,6 @@ const Preview = ({ upload }) => {
 	const location = useLocation();
 	const item = location.state.item;
 
-	// const buyMarketItem = async (item) => {
-	//     await (await marketplace.purchaseItem(item.itemId, { value: item.totalPrice })).wait()
-	//     // loadMarketplaceItems()
-	//   }
-
-	// const onClick = () => {
-	//     buyMarketItem(item)
-	//     .then(result => {
-	//     navigate("/home");
-	//     })
-	//     .catch(error => {
-	//         console.log(error.message);
-	//     })
-	// }
-
 	useEffect(() => {
 		onImageChange(item.image);
 	}, []);
@@ -46,7 +31,7 @@ const Preview = ({ upload }) => {
 			let canvas = tiff.toCanvas({ quality: "thumbnail" });
 			// var dataURI = tiff.toDataURL();
 			// document.getElementById(key).src = dataURI;
-			document.getElementById("details").appendChild(canvas);
+			document.getElementById("raster").appendChild(canvas);
 		};
 		xhr.send();
 	};
@@ -81,7 +66,31 @@ const Preview = ({ upload }) => {
 		// document.getElementById("img").src = image;
 	};
 
-	return <div id="details" className="container"></div>;
+	// return <div id="details" className="container"></div>;
+	return(
+        <div id="details" className="container" >
+            <div className="row">
+                <div id="raster" className="col-12 col-lg-6">
+                </div>
+                <div className="col-12 col-lg-6">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3>{item.title}</h3>
+                    </div>
+                    <div className="py-2">
+                        <h5>Details</h5>
+                        <p style={{textAlign:"justify"}}>{item.details}</p>
+                    </div>
+                    <div>
+                        
+						<button class="btn btn-primary btn-rounded">
+						<a href={item.image}>Download</a>
+						</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 //TODO:
 export default Preview;

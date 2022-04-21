@@ -6,13 +6,6 @@ import Card from "./Card";
 import Button from "./Button";
 
 
-// import img1 from "./img/assets/fcc_R2_AW_20220405_091_047_B_01.png";
-// import img2 from "./img/assets/fcc_R2_AW_20220405_091_047_D_01.png";
-// import img3 from "./img/assets/fcc_R2_AW_20220405_091_052_B_01.png";
-// import img4 from "./img/assets/fcc_R2_AW_20220405_091_052_C_01.png";
-// import img5 from "./img/assets/fcc_R2_AW_20220405_091_052_D_01.png";
-// import img6 from "./img/assets/fcc_R2_AW_20220405_091_057_A_01.png";
-
 const ContentSection = ({ upload }) => {
 	
 	    const [loading, setLoading] = useState(true)
